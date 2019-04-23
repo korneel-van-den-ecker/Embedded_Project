@@ -12,10 +12,12 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection',function(socket){
-  console.log(socket.client);
-  socket.on('pixelFrame',(msg)=>{
+io.on('connection',(socket)=>{
+  //console.log(socket.client);
+  socket.on('pixelFrame data',(msg)=>{
     console.log(msg);
+    Pix.tekenBitmap(msg);    
+    //Pix.tekstMarque("Hallo Test live tekenen")    
   });
 })
 

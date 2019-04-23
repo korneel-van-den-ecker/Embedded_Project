@@ -5,6 +5,7 @@ var _geselecteerdeKleur;
 var pixelFrame ;
 var BREEDTE = 16;
 var HOOGTE = 16;
+var socket = io();
 
 $(document).ready(function(){    
     $("#colorPicker").val("#FF0000");
@@ -32,15 +33,19 @@ $(document).ready(function(){
         }
     );
 
-    function Init_socketIO(){
-        var socket = io();
-        $('form').submit(function(e){
-          e.preventDefault(); // prevents page reloading
-          socket.emit('chat message', $('#m').val());   
-          $('#m').val('');
-          return false;
-        });
-    }
+    //$('#btnVerstuur').click(function(e){
+        //Maakjson();
+        //e.preventDefault();
+        //socket.emit('pixelFrame data',pixelFrame);
+        //return false;
+    //});
+
+    //$("#btnVerstuur").click(function(){   
+    //    Verzend_Mqtt();
+        
+    //    DisableButton();
+    //});   
+
 
     function Maakjson(){
         //Json Object prepareren
@@ -49,10 +54,13 @@ $(document).ready(function(){
             var xPos = $(this).data('xpos'),
                 yPos = $(this).data('ypos'),
                 kleur = $(this).css("background-color");
+                //We kuisen eerst de kleur code op dat deze gewoon r,g,b wordt
+                var kleurGeknipt = kleur.slice(4,kleur.length-1);
+                console.log(kleurGeknipt);
             pixelFrame.pixelLijst.push({
                 'xPos':parseInt(yPos),
                 'yPos':parseInt(xPos),
-                'kleur': kleur   
+                'kleur':kleurGeknipt   
             });
         });
         console.log(pixelFrame);
@@ -85,12 +93,12 @@ $(document).ready(function(){
             
         //gewoon via klasse kleuren 
         $(".btnPixel").css("background-color",_geselecteerdeKleur).css("style","none");
-    });   
-    $("#btnVerstuur").click(function(){   
-        Verzend_Mqtt();
-        
-        DisableButton();
-    });   
+        //En ook meteen verzenden via socket.io
+        Maakjson();
+        socket.emit('pixelFrame data',pixelFrame);
+    });  
+
+    
 
     
     async function DisableButton(){
@@ -125,6 +133,10 @@ $(document).ready(function(){
         }  
 
         //Verzenden van de frame over socket.io  bij elke verandering
+        //Maakjson();
+        //event.preventDefault();
+        socket.emit('pixelFrame data',pixelFrame);
+        //return false;
     }
 
     function Verzend_Mqtt(){

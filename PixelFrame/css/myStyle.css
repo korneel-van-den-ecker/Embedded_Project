@@ -1,8 +1,14 @@
 
   .btnPixel{
-      height: 25px;
-      width: 25px;
-      margin: 1px;
+      min-height: 15px;
+      min-width: 15px;
+      padding: 0%;
+      /*height: 30px;
+      width: 30px;
+      margin: 1px;*/
+  }
+  body{
+    line-height: 0%;    
   }
 
   .tekstCheckbox{
