@@ -4,7 +4,9 @@ const app = express()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Pix = require('pixelframe');
-// Om de map public mee te zenden als static data naar de client
+
+// Om de map public mee te zenden als static data naar de client,
+//staat dan in root
 app.use(express.static('PixelFrame'));
 
 
@@ -16,18 +18,9 @@ io.on('connection',(socket)=>{
   //console.log(socket.client);
   socket.on('pixelFrame data',(msg)=>{
     console.log(msg);
-    Pix.tekenBitmap(msg);    
-    //Pix.tekstMarque("Hallo Test live tekenen")    
+    Pix.tekenBitmap(msg);      
   });
 })
-
-
-//io.on('connection', function(socket){
-//    socket.on('chat message', function(msg){
-//      console.log('message: ' + msg);
-//      Pix.tekstMarque(msg);
-//    });
-//  });
 
 http.listen(3000, function(){
   console.log('listening on *:3000');

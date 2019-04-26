@@ -136,6 +136,7 @@ $(document).ready(function(){
         //Maakjson();
         //event.preventDefault();
         socket.emit('pixelFrame data',pixelFrame);
+        Verzend_Mqtt(); 
         //return false;
     }
 
