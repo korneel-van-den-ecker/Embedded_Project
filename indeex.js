@@ -5,6 +5,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Pix = require('pixelframe');
 
+var berichtenLijst = [];
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/indeex.html');
@@ -13,11 +14,12 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
     socket.on('PixelframeTekst', function(msg){
       console.log('message: ' + msg);
-      //Tekst naar Pixelframe sturen
+      //tekst aan lijst toevoegen
       Pix.tekstMarque(msg);
+      console.log('tekst getoond')
     });
 });
 
-http.listen(3000, function(){
+http.listen(3001, function(){
   console.log('listening on *:3000');
 });
