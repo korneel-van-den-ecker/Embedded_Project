@@ -22,7 +22,7 @@ $(document).ready(function(){
 
     $("#btnVerstuur").prop("disabled",true);
 
-    
+        
     client.connect(
         {
             //Onconnected is een functie
@@ -40,11 +40,11 @@ $(document).ready(function(){
         //return false;
     //});
 
-    //$("#btnVerstuur").click(function(){   
-    //    Verzend_Mqtt();
+    $("#btnVerstuur").click(function(){   
+        Verzend_Mqtt();
         
-    //    DisableButton();
-    //});   
+        DisableButton();
+    });   
 
 
     function Maakjson(){
