@@ -14,3 +14,7 @@
   .tekstCheckbox{
       display: inline-block;
   }
+
+  .numberTogglers{
+    max-width: 50px;
+  }

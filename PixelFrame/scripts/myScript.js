@@ -1,7 +1,17 @@
 
+//Om hier ook de colors te kunnen gebruiken 
+function kleur(r,g,b,bright){
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    this.brightness = bright;
+}
+
 var mqttHost = "m23.cloudmqtt.com";
 var mqttPort = 34309;
-var _geselecteerdeKleur;
+var _geselecteerdeKleurLiveEditor ;
+var _geselecteerdeKleurMarqueeLetters ;
+var _geselecteerdeKleurMarqueeAchterGrond ;
 var pixelFrame ;
 var BREEDTE = 16;
 var HOOGTE = 16;
@@ -12,15 +22,36 @@ $(function () {
     var socket = io();
     $('form').submit(function(e){
       e.preventDefault(); // prevents page reloading
-      socket.emit('PixelframeTekst', $('#m').val());   
+      var teverzendenOject = {
+          "tekst" :  $('#m').val(),
+          "tekstKleur" : _geselecteerdeKleurMarqueeLetters,
+          "tekstbrightness" : $('#brightLetters').val(),
+          "achertergrondkleur" : _geselecteerdeKleurMarqueeAchterGrond,
+          "achertergrondkleurBrightness" : $('#brightLettersAchterGrond').val()
+      }      
+      socket.emit('PixelframeTekst', teverzendenOject);   
       $('#m').val('');
       return false;
     });
-  });
+});
+
+  
+
 
 $(document).ready(function(){    
-    $("#colorPicker").val("#FF0000");
-    _geselecteerdeKleur = $("#colorPicker").val();
+    //Colorpickers en brightnes  Initialiseren:
+    //live-editor
+    $("#colorPickerLiveEditor").val("#FF0000");
+    _geselecteerdeKleurLiveEditor = $("#colorPickerLiveEditor").val();
+
+    //Marquee LettersKleur
+    $("#colorPickerLetters").val("#000000");
+    _geselecteerdeKleurMarqueeLetters = $("#colorPickerLetters").val();
+
+    //Marquee achtergrond
+    $("#colorPickerLettersAchtergrond").val("#FF0000");
+    _geselecteerdeKleurMarqueeAchterGrond = $("#colorPickerLettersAchtergrond").val();
+
     tekenTabel();
     $(".btnPixel").css("background-color","black").css("style","none"); 
     
@@ -96,14 +127,39 @@ $(document).ready(function(){
             }            
         }
     };    
-    $("#colorPicker").change(function(){
-        _geselecteerdeKleur = this.value;
+
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+      };
+
+      //Waarden van de kleuren aanpassn
+    $("#colorPickerLiveEditor").change(function(){
+        _geselecteerdeKleurLiveEditor = this.value;
+    });
+
+    $("#colorPickerLetters").change(function(){        
+        var rgbKleur = hexToRgb(this.value);
+        _geselecteerdeKleurMarqueeLetters = new kleur(rgbKleur.r,rgbKleur.g,rgbKleur.b,$('#brightLetters').val());
+    });
+
+    $("#colorPickerLettersAchtergrond").change(function(){        
+        var rgbKleur = hexToRgb(this.value);
+        _geselecteerdeKleurMarqueeAchterGrond = new kleur(rgbKleur.r,rgbKleur.g,rgbKleur.b,$('#brightLettersAchterGrond').val());
+    });
+
+    $('#brightLetters').change(()=>{
+        //Implementeren dat alles update als 1 van de twee veranderd
     });
 
     $("#btnKleur").click(function(){   
             
         //gewoon via klasse kleuren 
-        $(".btnPixel").css("background-color",_geselecteerdeKleur).css("style","none");
+        $(".btnPixel").css("background-color",_geselecteerdeKleurLiveEditor).css("style","none");
         //En ook meteen verzenden via socket.io
         Maakjson();
         socket.emit('pixelFrame data',pixelFrame);
@@ -129,18 +185,18 @@ $(document).ready(function(){
         //teken een lijn 
         if($("#checkBoxRij").is(':checked')){
             for (let i = 0; i < BREEDTE; i++) {
-                UpdatePixelColor(event.data.xPos, i,_geselecteerdeKleur)
+                UpdatePixelColor(event.data.xPos, i,_geselecteerdeKleurLiveEditor)
             }
         }
         //teken een kolom
         else if($("#checkBoxKolom").is(':checked')){
             for (let i = 0; i < BREEDTE; i++) {
-                UpdatePixelColor(i, event.data.yPos,_geselecteerdeKleur)
+                UpdatePixelColor(i, event.data.yPos,_geselecteerdeKleurLiveEditor)
             }
         }
         //teken een enkele pixel
         else{
-            UpdatePixelColor(event.data.xPos,event.data.yPos,_geselecteerdeKleur);    
+            UpdatePixelColor(event.data.xPos,event.data.yPos,_geselecteerdeKleurLiveEditor);    
         }  
 
         //Verzenden van de frame over socket.io  bij elke verandering

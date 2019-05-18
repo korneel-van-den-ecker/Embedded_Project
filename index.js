@@ -1,3 +1,11 @@
+//Om hier ook de colors te kunnen gebruiken 
+function kleur(r,g,b,bright){
+  this.r = r;
+  this.g = g;
+  this.b = b;
+  this.brightness = bright;
+}
+
 const express = require('express');
 const app = express()
 
@@ -62,7 +70,7 @@ app.get('/', function(req, res){
 io.on('connection',(socket)=>{
   //console.log(socket.client);
   socket.on('pixelFrame data',(msg)=>{
-    console.log(msg);
+    //console.log(msg);
     Pix.tekenBitmap(msg);      
   });
 })
@@ -70,10 +78,8 @@ io.on('connection',(socket)=>{
 //Voor de tekst
 io.on('connection', function(socket){
   socket.on('PixelframeTekst', function(msg){
-    console.log('message: ' + msg);
-    //tekst aan lijst toevoegen
-    //berichtenLijst.push(msg);
-    Pix.tekstMarque(msg);
+    console.log(msg);
+    Pix.tekstMarque(msg.tekst,msg.tekstKleur,msg.achertergrondkleur);
     console.log('tekst getoond')
   });
 });
