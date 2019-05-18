@@ -7,6 +7,17 @@ var BREEDTE = 16;
 var HOOGTE = 16;
 var socket = io();
 
+//Voor het tekstvak
+$(function () {
+    var socket = io();
+    $('form').submit(function(e){
+      e.preventDefault(); // prevents page reloading
+      socket.emit('PixelframeTekst', $('#m').val());   
+      $('#m').val('');
+      return false;
+    });
+  });
+
 $(document).ready(function(){    
     $("#colorPicker").val("#FF0000");
     _geselecteerdeKleur = $("#colorPicker").val();
