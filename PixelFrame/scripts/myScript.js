@@ -20,14 +20,12 @@ var socket = io();
 //Voor het tekstvak
 $(function () {
     var socket = io();
-    $('form').submit(function(e){
+    $('#verzendForm').submit(function(e){
       e.preventDefault(); // prevents page reloading
       var teverzendenOject = {
           "tekst" :  $('#m').val(),
           "tekstKleur" : _geselecteerdeKleurMarqueeLetters,
-          "tekstbrightness" : $('#brightLetters').val(),
           "achertergrondkleur" : _geselecteerdeKleurMarqueeAchterGrond,
-          "achertergrondkleurBrightness" : $('#brightLettersAchterGrond').val()
       }      
       socket.emit('PixelframeTekst', teverzendenOject);   
       $('#m').val('');
@@ -46,11 +44,18 @@ $(document).ready(function(){
 
     //Marquee LettersKleur
     $("#colorPickerLetters").val("#000000");
-    _geselecteerdeKleurMarqueeLetters = $("#colorPickerLetters").val();
+    _geselecteerdeKleurMarqueeLetters = 
+        getColorFromInterface($("#colorPickerLetters").val(),$('#brightLetters').val());
+    //_geselecteerdeKleurMarqueeLetters = $("#colorPickerLetters").val();
 
     //Marquee achtergrond
-    $("#colorPickerLettersAchtergrond").val("#FF0000");
-    _geselecteerdeKleurMarqueeAchterGrond = $("#colorPickerLettersAchtergrond").val();
+    $("#colorPickerLettersAchtergrond").val("#FF0000");          
+    _geselecteerdeKleurMarqueeAchterGrond = 
+    getColorFromInterface($("#colorPickerLettersAchtergrond").val(),$('#brightLettersAchterGrond').val());
+    //_geselecteerdeKleurMarqueeAchterGrond = $("#colorPickerLettersAchtergrond").val();
+    
+
+
 
     tekenTabel();
     $(".btnPixel").css("background-color","black").css("style","none"); 
@@ -137,24 +142,37 @@ $(document).ready(function(){
         } : null;
       };
 
+      function getColorFromInterface(kleurVal,brightVal){
+        var rgbKleur = hexToRgb(kleurVal);
+        return new kleur(rgbKleur.r,rgbKleur.g,rgbKleur.b,brightVal);
+    }
+
       //Waarden van de kleuren aanpassn
     $("#colorPickerLiveEditor").change(function(){
         _geselecteerdeKleurLiveEditor = this.value;
     });
 
-    $("#colorPickerLetters").change(function(){        
-        var rgbKleur = hexToRgb(this.value);
-        _geselecteerdeKleurMarqueeLetters = new kleur(rgbKleur.r,rgbKleur.g,rgbKleur.b,$('#brightLetters').val());
+    $("#colorPickerLetters").change(function(){  
+        _geselecteerdeKleurMarqueeLetters = 
+        getColorFromInterface($("#colorPickerLetters").val(),$('#brightLetters').val());   
     });
+
+    $("#brightLetters").change(function(){  
+        _geselecteerdeKleurMarqueeLetters = 
+        getColorFromInterface($("#colorPickerLetters").val(),$('#brightLetters').val());   
+    });
+
+    
 
     $("#colorPickerLettersAchtergrond").change(function(){        
-        var rgbKleur = hexToRgb(this.value);
-        _geselecteerdeKleurMarqueeAchterGrond = new kleur(rgbKleur.r,rgbKleur.g,rgbKleur.b,$('#brightLettersAchterGrond').val());
+        _geselecteerdeKleurMarqueeAchterGrond = 
+            getColorFromInterface($("#colorPickerLettersAchtergrond").val(),$('#brightLettersAchterGrond').val());        
+    });
+    $("#brightLettersAchterGrond").change(function(){        
+        _geselecteerdeKleurMarqueeAchterGrond = 
+            getColorFromInterface($("#colorPickerLettersAchtergrond").val(),$('#brightLettersAchterGrond').val());        
     });
 
-    $('#brightLetters').change(()=>{
-        //Implementeren dat alles update als 1 van de twee veranderd
-    });
 
     $("#btnKleur").click(function(){   
             

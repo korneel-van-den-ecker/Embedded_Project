@@ -14,31 +14,61 @@
 <script src="/socket.io/socket.io.js"></script>
 <script language= "JavaScript" src="scripts/bootstrap.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type ="text/css" href="css/bootstrap.min.css" />
+<!--Voor het favicon-->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-TileColor" content="#da532c"> 
+<meta name="theme-color" content="#ffffff">
 
     </head>
     <body>
-            <div class="jumbetron jumbotron-fluid bg-secondary text-white">
+            <div class="jumbetron jumbotron-fluid bg-dark text-light">
                     <div class="container">
                         <h1>PixelFrame Webinterface 3000</h1>
                         <h2 id="connect"></h2>
                     </div>
         
-                <div class="container "> 
-                    <div class="container">
-                        <form action="">
-                            <input id="m" autocomplete="off" /><button>Send</button>      
-                        </form>
-                        <div class="colorPickerContainer">
-                            <input id="colorPickerLetters" type="color" value="red">
-                            <input class="numberTogglers" id="brightLetters" type="number" value="5" >
-                            </div>
-                        <div class="colorPickerContainer">
-                            <input id="colorPickerLettersAchtergrond" type="color" value="red">
-                            <input class="numberTogglers" id="brightLettersAchterGrond" type="number" value="5" >
-                        </div>
-                    </div>  
+                <div class="container ">                     
                     <div class="row">
                         <div class="col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Pixel-Marquee</div>
+                                <div class="panel-body">
+                                    <form id="verzendForm" action="">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Te verzenden tekst:</span>
+                                            </div>                    
+                                                <input class="form-control" type="text" id="m" autocomplete="off" />
+                                            <div class="input-group-append">
+                                                <button id="verzendKnop" class="btn btn-outline-secondary" >Verzend</button>
+                                            </div>
+                                        </div> 
+                                    </form>
+                
+                                    <div class="colorPickerContainer input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Letterkleur:</span>
+                                        </div> 
+                                        <input id="colorPickerLetters" type="color" value="red">
+                                        <span class="input-group-text" id="basic-addon1">Brightness:</span>
+                                        <input class="numberTogglers" id="brightLetters" type="number" value="5" max="31" >
+                                    </div>
+                                    <div class="colorPickerContainer input-group mb-3">
+                                         <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Achtergrondkleur:</span>
+                                        </div> 
+                                        <input id="colorPickerLettersAchtergrond" type="color" value="red">
+                                        <span class="input-group-text" id="basic-addon1">Brightness:</span>
+                                        <input class="numberTogglers" id="brightLettersAchterGrond" type="number" value="5" max="31" >
+                                    </div>
+                                </div>
+                            </div> 
+                            
+                   
+                    
                             <button id="btnKleur" >Kleur volledig frame</button>    
                             <button id="btnVerstuur"> Verstuur uw Afbeelding</button>
                             <button id="btnReset">Reset</button>   
@@ -52,7 +82,7 @@
                             </div>                    
                             <div id="colorPickerContainer">
                                 <input id="colorPickerLiveEditor" type="color" value="red">
-                                <input class="numberTogglers" id="brightLiveEdito" type="number" value="5" >
+                                <input class="numberTogglers" id="brightLiveEdito" type="number" value="5" max="31" >
                             </div>
                         </div>
                         <div class="col-6" >
@@ -64,7 +94,7 @@
                 <div class="container navbar navbar-default navbar-fixed-bottom">
                     <footer class="row">
                         <div class="col-sm-6 d-none d-sm-block col-md-4">K.Van den Ecker</div>
-                        <div class="d-none col-md-4 d-md-block text-center">Juni 2019</div>
+                        <div class="d-none col-md-4 d-md-block text-center">Mei 2019</div>
                         <div class="col-12 col-sm-6 col-md-4 text-left text-sm-right"> &copy; KorTronics</div>
                     </footer>
                 </div>   
