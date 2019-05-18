@@ -4,20 +4,39 @@ const app = express()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Pix = require('pixelframe');
-var mqtt = require('./mqtt_Info');
+//var mqtt_server = require('./MQTT_Server');
+//var mqtt = require('mqtt');
 
-// Om de map public mee te zenden als static data naar de client,
-//staat dan in root
 app.use(express.static('PixelFrame'));
 
 //Instellen van deopties voor de connectie met Mqtt
 
-var client = new mqtt();
+//var client = new mqtt_server();
+//console.log("hallo");
+//client.connect();
+// Om de map public mee te zenden als static data naar de client,
+//staat dan in root
+
+var mqtt = require('mqtt');
+var options = {
+    port: 34309,
+    host: 'mqtt://m23.cloudmqtt.com',
+    clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+    username: 'pwakhnjz',
+    password: 'Z_-Miwavd08t ',
+    keepalive: 60,
+    reconnectPeriod: 1000,
+    protocolId: 'MQIsdp',
+    protocolVersion: 3,
+    clean: true,
+    encoding: 'utf8'
+};
+var client = mqtt.connect('mqtt://m23.cloudmqtt.com', options);
 
 client.on('connect', function() { // When connected
-    console.log('connected');
+    console.log('connected Met Mqtt broker');
     // subscribe to a topic
-    client.subscribe('PixelFrame', function() {
+    client.subscribe('pixelframe', function() {
         // when a message arrives, do something with it
         client.on('message', function(topic, message, packet) {
             console.log("Received '" + message + "' on '" + topic + "'");
@@ -25,15 +44,19 @@ client.on('connect', function() { // When connected
     });
 
     // publish a message to a topic
-    //client.publish('topic1/#', 'my message', function() {
-     //   console.log("Message is published");
-     //   client.end(); // Close the connection when published
-    //});
+    client.publish('topic1/#', 'my message', function() {
+        console.log("Message is published");
+        client.end(); // Close the connection when published
+    });
+
+    
 });
 
-client.on('error', function(err) {
-  console.log(err);
+client.on('error',(error)=>{
+  console.log("Réééééééééééééé")
+  console.log(error)
 });
+
 
 
 app.get('/', function(req, res){
@@ -49,5 +72,5 @@ io.on('connection',(socket)=>{
 })
 
 http.listen(3000, function(){
-  console.log('listening on *:3000');
+  console.log('listening on *:3000');  
 });

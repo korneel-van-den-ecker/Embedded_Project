@@ -1,18 +1,16 @@
 const mqtt = require('mqtt');
 
-const mqtt_info = require('./mqtt_info');
+//const mqtt_info = require('./mqtt_info');
 
-
-class MQTT_Server {
-
-  constructor(info) {
-    let info = new mqtt_info();
-    console.log(info);
-    this.port= info.poort	,
-    this.mqttClient = info.clientID;
-    this.host = info.hostnaam;
-    this.username = info.username; // mqtt credentials if these are needed to connect
-    this.password = info.password;
+module.exports =class MQTT_Server {
+  constructor() {    
+    //let info = new mqtt_info();
+    //console.log(info);
+    this.port= 34309	;
+    this.mqttClient = Math.floor(Math.random()* 10001);
+    this.host = "m20.cloudmqtt.com";
+    this.username = "korneel"; // mqtt credentials if these are needed to connect
+    this.password = "admin";
   }
   
   connect() {
@@ -49,8 +47,3 @@ class MQTT_Server {
   }
 }
 
-
-
-
-
-module.exports = MqttHandler;
