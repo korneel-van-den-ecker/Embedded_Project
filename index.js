@@ -44,11 +44,11 @@ var options = {
 };
 var client = mqtt.connect('mqtt://m23.cloudmqtt.com', options);
 
-client.on('connect', function() { // When connected
+client.on('connect', function() { 
     console.log('connected Met Mqtt broker');
-    // subscribe to a topic
+    // subscribe op pixelfram
     client.subscribe('pixelframe', function() {
-        // when a message arrives, do something with it
+        //bericht komt binnen
         client.on('message', function(topic, message, packet) {
             console.log("Received '" + message + "' on '" + topic + "'");
         });
@@ -69,14 +69,14 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-
+//verbinden met socket client
 io.on('connection', function(socket){
   //Voor Live editor
   socket.on('pixelFrame data',(msg)=>{
     console.log(msg);
     Pix.tekenBitmap(msg);      
   });
-
+  //wanneer er teskt voor de Marquee binnenkomt + client emitten van beschikbaarheid
   socket.on('PixelframeTekst', async function(msg){
     _TekstAanHetTonen = true;
       io.emit('marqueeBezig',_TekstAanHetTonen);
