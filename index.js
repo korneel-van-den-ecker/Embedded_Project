@@ -12,10 +12,13 @@ const app = express()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Pix = require('pixelframe');
+var _TekstAanHetTonen = false;
 //var mqtt_server = require('./MQTT_Server');
 //var mqtt = require('mqtt');
 
 app.use(express.static('PixelFrame'));
+
+
 
 //Instellen van deopties voor de connectie met Mqtt
 
@@ -75,12 +78,14 @@ io.on('connection',(socket)=>{
   });
 })
 
-//Voor de tekst
+
 io.on('connection', function(socket){
-  socket.on('PixelframeTekst', function(msg){
-    console.log(msg);
-    Pix.tekstMarque(msg.tekst,msg.tekstKleur,msg.achertergrondkleur);
-    console.log('tekst getoond')
+  socket.on('PixelframeTekst', async function(msg){
+    _TekstAanHetTonen = true;
+    if( await Pix.tekstMarque(msg.tekst,msg.tekstKleur,msg.achertergrondkleur) == true){
+      console.log('Klaar')
+      socket.emit('marqueeBezig',true);
+    }
   });
 });
 

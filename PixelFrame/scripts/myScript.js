@@ -29,6 +29,7 @@ $(function () {
       }      
       socket.emit('PixelframeTekst', teverzendenOject);   
       $('#m').val('');
+      
       return false;
     });
 });
