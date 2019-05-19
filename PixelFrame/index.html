@@ -24,10 +24,10 @@
 
     </head>
     <body>
-            <div class="jumbetron jumbotron-fluid bg-dark text-light">
+            <div class=" bg-dark text-light">
                     <div class="container">
-                        <h1>PixelFrame Webinterface 3000</h1>
-                        <h2 id="connect"></h2>
+                        <h1>PixelFrame 3000</h1>
+                        <h3 id="connect"></h3>
                     </div>
         
                 <div class="container ">                     
@@ -54,7 +54,7 @@
                                         </div> 
                                         <input id="colorPickerLetters" type="color" value="red">
                                         <span class="input-group-text" id="basic-addon1">Brightness:</span>
-                                        <input class="numberTogglers" id="brightLetters" type="number" value="5" max="31" >
+                                        <input class="numberTogglers" id="brightLetters" type="number" value="5" max="31" min="0" >
                                     </div>
                                     <div class="colorPickerContainer input-group mb-3">
                                          <div class="input-group-prepend">
@@ -62,27 +62,45 @@
                                         </div> 
                                         <input id="colorPickerLettersAchtergrond" type="color" value="red">
                                         <span class="input-group-text" id="basic-addon1">Brightness:</span>
-                                        <input class="numberTogglers" id="brightLettersAchterGrond" type="number" value="5" max="31" >
+                                        <input class="numberTogglers" id="brightLettersAchterGrond" type="number" value="5" max="31" min="0" >
                                     </div>
                                 </div>
                             </div> 
-                            
-                   
-                    
-                            <button id="btnKleur" >Kleur volledig frame</button>    
-                            <button id="btnVerstuur"> Verstuur uw Afbeelding</button>
-                            <button id="btnReset">Reset</button>   
-                            <div>
-                                <input class="chkBox" id="checkBoxRij" type="checkbox" value="checked">
-                                <p class="tekstCheckbox">Kleur hele rij</p>
-                            </div>  
-                            <div>
-                                <input class="chkBox" id="checkBoxKolom" type="checkbox" value="checked">
-                                <p class="tekstCheckbox">Kleur hele kolom</p>
-                            </div>                    
-                            <div id="colorPickerContainer">
-                                <input id="colorPickerLiveEditor" type="color" value="red">
-                                <input class="numberTogglers" id="brightLiveEdito" type="number" value="5" max="31" >
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Live Editor</div>
+                                <div class="panel-body">
+                                    <div class="colorPickerContainer input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Kleur:</span>
+                                        </div> 
+                                        <input id="colorPickerLiveEditor" type="color" value="red">
+                                        <span class="input-group-text" id="basic-addon1">Brightness:</span>
+                                        <input class="numberTogglers" id="brightLiveEdito" type="number" value="5" max="31" min="0" >
+                                    </div>
+                                    <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span class="input-group-text" id="basic-addon1">Rij:</span>                                                
+                                                </div>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <input class="chkBox " id="checkBoxRij" type="checkbox" value="checked">                                            
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon1">Kolom:</span>
+                                                <div class="input-group-text">
+                                                    <input class="chkBox" id="checkBoxKolom" type="checkbox" value="checked">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class=" input-group mb-3">                                        
+                                        <button class="btn btn-outline-secondary" id="btnKleur" >Kleur volledig frame</button>    
+                                        <button class="btn btn-outline-secondary" id="btnVerstuur"> Verstuur uw Afbeelding</button>
+                                        <button class="btn btn-outline-secondary" id="btnReset">Reset</button>   
+                                    </div>
+                                      
+                                </div>
                             </div>
                         </div>
                         <div class="col-6" >
