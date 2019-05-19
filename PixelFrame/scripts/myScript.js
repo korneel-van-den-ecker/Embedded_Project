@@ -17,6 +17,7 @@ var BREEDTE = 16;
 var HOOGTE = 16;
 var socket = io();
 
+
 //Voor het tekstvak
 $(function () {
     var socket = io();
@@ -27,9 +28,26 @@ $(function () {
           "tekstKleur" : _geselecteerdeKleurMarqueeLetters,
           "achertergrondkleur" : _geselecteerdeKleurMarqueeAchterGrond,
       }      
-      socket.emit('PixelframeTekst', teverzendenOject);   
+      socket.emit('PixelframeTekst', teverzendenOject);  
+       
       $('#m').val('');
-      
+      // Om te ontvangen dat er iemand aan het zenden is of niet
+      //Bepaald bescjikbaarheid van Marquee op client
+      socket.on('marqueeBezig', function(msg){          
+          if(msg == false){
+            $('#MarqueeBeschikbaarheid').text('Beschikbaar');
+            $('#marqueePaneel').show();
+            $('#marqueeWarning').hide();
+            
+            console.log("beschikbaar Marquee")
+          }
+          else{
+            console.log(" NIET beschikbaar Marquee")
+            $('#MarqueeBeschikbaarheid').val('NIET Beschikbaar');
+            $('#marqueePaneel').hide();
+            $('#marqueeWarning').show();            
+          }        
+      });
       return false;
     });
 });
@@ -38,6 +56,10 @@ $(function () {
 
 
 $(document).ready(function(){    
+    //Start zonder warning te laten zien
+    $('#marqueeWarning').hide();
+
+
     //Colorpickers en brightnes  Initialiseren:
     //live-editor
     $("#colorPickerLiveEditor").val("#FF0000");

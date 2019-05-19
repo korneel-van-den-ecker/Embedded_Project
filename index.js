@@ -69,24 +69,23 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-//voro de live editor
-io.on('connection',(socket)=>{
-  //console.log(socket.client);
+
+io.on('connection', function(socket){
+  //Voor Live editor
   socket.on('pixelFrame data',(msg)=>{
     console.log(msg);
     Pix.tekenBitmap(msg);      
   });
-})
 
-
-io.on('connection', function(socket){
   socket.on('PixelframeTekst', async function(msg){
     _TekstAanHetTonen = true;
+      io.emit('marqueeBezig',_TekstAanHetTonen);
     if( await Pix.tekstMarque(msg.tekst,msg.tekstKleur,msg.achertergrondkleur) == true){
-      console.log('Klaar')
-      socket.emit('marqueeBezig',true);
-    }
-  });
+      console.log('Klaar');
+      _TekstAanHetTonen = false;
+      io.emit('marqueeBezig',_TekstAanHetTonen);
+    } 
+  });  
 });
 
 http.listen(3000, function(){
