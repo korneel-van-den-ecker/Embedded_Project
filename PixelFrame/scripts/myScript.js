@@ -58,6 +58,7 @@ $(document).ready(function(){
 
 
     tekenTabel();
+
     $(".btnPixel").css("background-color","black").css("style","none"); 
     
     var clientId = Math.floor(Math.random()* 10001); 
@@ -100,14 +101,16 @@ $(document).ready(function(){
         $('.btnPixel').each(function(){
             var xPos = $(this).data('xpos'),
                 yPos = $(this).data('ypos'),
-                kleur = $(this).css("background-color");
+                kleur = $(this).css("background-color"),
+                bright = $(this).data('brightness');                
                 //We kuisen eerst de kleur code op dat deze gewoon r,g,b wordt
                 var kleurGeknipt = kleur.slice(4,kleur.length-1);
-                console.log(kleurGeknipt);
+                //console.log(kleurGeknipt);
             pixelFrame.pixelLijst.push({
                 'xPos':parseInt(yPos),
                 'yPos':parseInt(xPos),
-                'kleur':kleurGeknipt   
+                'kleur':kleurGeknipt,
+                'brightness' : bright
             });
         });
         console.log(pixelFrame);
@@ -123,7 +126,7 @@ $(document).ready(function(){
                 var button = document.createElement("button");
                 button.className = "btnPixel"
                 //$(button).data("data-xpos",i).data("data-ypos",j)
-                $(button).attr("data-xpos",i).attr('data-ypos',j)
+                $(button).attr("data-xpos",i).attr('data-ypos',j).attr('data-brightness',$("#brightLiveEdito").val())
                 //Event handler
                 $(button).click({xPos: i, yPos: j,kleur: 0x00ff00}, ModifyLedFrame);
                 var td = $('<td ></td>');
@@ -236,7 +239,9 @@ $(document).ready(function(){
     };
 
     function UpdatePixelColor(xPos, yPos,kleur){
-        $('.btnPixel[data-xpos="' + xPos + '"][data-ypos="'+yPos+'"]').css("background-color",kleur);
+        var test = $("#brightLiveEdito").val();
+        $('.btnPixel[data-xpos="' + xPos + '"][data-ypos="'+yPos+'"]').css("background-color",kleur).data('brightness',$("#brightLiveEdito").val());
+      
         Maakjson();
     }
 
@@ -244,7 +249,7 @@ $(document).ready(function(){
     {
         console.log("onConnected");
         //Connected tonen wanneer mqtt geconecteerd is
-        $("#connect").html("CONNECTED").addClass("text text-succes");
+        $("#connect").html("CONNECTED to Mqtt-broker").addClass("text-succes");
         
         client.subscribe("pixelFrame",{onSuccess:OnSubscribed});
         $("#btnVerstuur").prop("disabled",false);

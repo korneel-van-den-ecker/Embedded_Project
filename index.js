@@ -70,7 +70,7 @@ app.get('/', function(req, res){
 io.on('connection',(socket)=>{
   //console.log(socket.client);
   socket.on('pixelFrame data',(msg)=>{
-    //console.log(msg);
+    console.log(msg);
     Pix.tekenBitmap(msg);      
   });
 })

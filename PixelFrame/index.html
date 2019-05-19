@@ -24,11 +24,13 @@
 
     </head>
     <body>
-            <div class=" bg-dark text-light">
-                    <div class="container">
-                        <h1>PixelFrame 3000</h1>
-                        <h3 id="connect"></h3>
-                    </div>
+            <div class="p-3 mb-2 bg-dark text-white">
+                    <div class="jumbotron  p-3 mb-2 bg-secondary text-white" >
+                            <div class="container">
+                              <h1 class="display-4">PixelFrame 3000</h1>
+                              <p id="connect" class="lead">Connecting To Mqtt Broker....</p>
+                            </div>
+                          </div>                    
         
                 <div class="container ">                     
                     <div class="row">
@@ -62,7 +64,7 @@
                                         </div> 
                                         <input id="colorPickerLettersAchtergrond" type="color" value="red">
                                         <span class="input-group-text" id="basic-addon1">Brightness:</span>
-                                        <input class="numberTogglers" id="brightLettersAchterGrond" type="number" value="5" max="31" min="0" >
+                                        <input  class="numberTogglers" id="brightLettersAchterGrond" type="number" value="5" max="31" min="0" >
                                     </div>
                                 </div>
                             </div> 
@@ -96,15 +98,15 @@
                                         </div>
                                     <div class=" input-group mb-3">                                        
                                         <button class="btn btn-outline-secondary" id="btnKleur" >Kleur volledig frame</button>    
-                                        <button class="btn btn-outline-secondary" id="btnVerstuur"> Verstuur uw Afbeelding</button>
+                                        <button class="btn btn-outline-secondary" id="btnVerstuur"> Verstuur uw Afbeelding(MQTT)</button>
                                         <button class="btn btn-outline-secondary" id="btnReset">Reset</button>   
                                     </div>
                                       
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6" >
-                            <div id="pixelframe"></div>
+                        <div class="col-lg-6" >
+                            <table class="table" id="pixelframe"></table>
                         </div>
                     </div>
                 </div> 
