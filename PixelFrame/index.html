@@ -14,35 +14,108 @@
 <script src="/socket.io/socket.io.js"></script>
 <script language= "JavaScript" src="scripts/bootstrap.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type ="text/css" href="css/bootstrap.min.css" />
+<!--Voor het favicon-->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="msapplication-TileColor" content="#da532c"> 
+<meta name="theme-color" content="#ffffff">
 
     </head>
     <body>
-            <div class="jumbetron jumbotron-fluid bg-info text-white">
-                    <div class="container">
-                        <h1>PixelFrame Webinterface 3000</h1>
-                        <h2 id="connect"></h2>
-                    </div>
+            <div class="p-3 mb-2 bg-dark text-white">
+                    <div class="jumbotron  p-3 mb-2 bg-secondary text-white" >
+                            <div class="container">
+                              <h1 class="display-4">PixelFrame 3000</h1>
+                              <p id="connect" class="lead">Connecting To Mqtt Broker....</p>
+                            </div>
+                          </div>                    
         
-                <div class="container ">   
+                <div class="container ">                     
                     <div class="row">
-                        <div class="col-lg-6">
-                            <button id="btnKleur" >Kleur volledig frame</button>    
-                            <button id="btnVerstuur"> Verstuur uw Afbeelding</button>
-                            <button id="btnReset">Reset</button>   
-                            <div>
-                                <input class="chkBox" id="checkBoxRij" type="checkbox" value="checked">
-                                <p class="tekstCheckbox">Kleur hele rij</p>
-                            </div>  
-                            <div>
-                                <input class="chkBox" id="checkBoxKolom" type="checkbox" value="checked">
-                                <p class="tekstCheckbox">Kleur hele kolom</p>
-                            </div>                    
-                            <div id="colorPickerContainer">
-                                <input id="colorPicker" type="color" value="red">
+                        <div class="container col-lg-6">
+                            <div id="marqueePaneel" class="panel panel-default">
+                                <div class="panel-heading">Pixel-Marquee</div>
+                                <div class="panel-body">
+                                    <form id="verzendForm" action="">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Te verzenden tekst:</span>
+                                            </div>                    
+                                                <input class="form-control" type="text" id="m" autocomplete="off" />
+                                            <div class="input-group-append">
+                                                <button id="verzendKnop" class="btn btn-outline-secondary" >Verzend</button>
+                                            </div>
+                                        </div> 
+                                    </form>
+                
+                                    <div class="colorPickerContainer input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Letterkleur:</span>
+                                        </div> 
+                                        <input id="colorPickerLetters" type="color" value="red">
+                                        <span class="input-group-text" id="basic-addon1">Brightness:</span>
+                                        <input class="numberTogglers" id="brightLetters" type="number" value="5" max="31" min="0" >
+                                    </div>
+                                    <div class="colorPickerContainer input-group mb-3">
+                                         <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Achtergrondkleur:</span>
+                                        </div> 
+                                        <input id="colorPickerLettersAchtergrond" type="color" value="red">
+                                        <span class="input-group-text" id="basic-addon1">Brightness:</span>
+                                        <input  class="numberTogglers" id="brightLettersAchterGrond" type="number" value="5" max="31" min="0" >
+                                    </div>
+                                </div>
+                            </div> 
+                            <div id="marqueeWarning"  class="panel panel-default">
+                                    <div class="panel-heading">Pixel-Marquee</div>
+                                    <div class="panel-body">
+                                            <span class="p-3 mb-2 bg-danger text-white input-group-text" id="basic-addon1">Marquee Bezet !!!</span>
+                                    </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Live Editor</div>
+                                <div class="panel-body">
+                                    <div class="colorPickerContainer input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Kleur:</span>
+                                        </div> 
+                                        <input id="colorPickerLiveEditor" type="color" value="red">
+                                        <span class="input-group-text" id="basic-addon1">Brightness:</span>
+                                        <input class="numberTogglers" id="brightLiveEdito" type="number" value="5" max="31" min="0" >
+                                    </div>
+                                    <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span class="input-group-text" id="basic-addon1">Rij:</span>                                                
+                                                </div>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <input class="chkBox " id="checkBoxRij" type="checkbox" value="checked">                                            
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon1">Kolom:</span>
+                                                <div class="input-group-text">
+                                                    <input class="chkBox" id="checkBoxKolom" type="checkbox" value="checked">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class=" input-group mb-3">                                        
+                                        <button class="btn btn-outline-secondary" id="btnKleur" >Kleur volledig frame</button>    
+                                        <button class="btn btn-outline-secondary" id="btnVerstuur"> Verstuur uw Afbeelding(MQTT)</button>
+                                        <button class="btn btn-outline-secondary" id="btnReset">Reset</button>   
+                                    </div>
+                                      
+                                </div>
+                                <div class="panel-footer">
+                                        <span class="input-group-text" id="MarqueeBeschikbaarheid">TEST</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-6" >
-                            <div id="pixelframe"></div>
+                        <div class="col-lg-6" >
+                            <table class="table" id="pixelframe"></table>
                         </div>
                     </div>
                 </div> 
@@ -50,7 +123,7 @@
                 <div class="container navbar navbar-default navbar-fixed-bottom">
                     <footer class="row">
                         <div class="col-sm-6 d-none d-sm-block col-md-4">K.Van den Ecker</div>
-                        <div class="d-none col-md-4 d-md-block text-center">Juni 2019</div>
+                        <div class="d-none col-md-4 d-md-block text-center">Mei 2019</div>
                         <div class="col-12 col-sm-6 col-md-4 text-left text-sm-right"> &copy; KorTronics</div>
                     </footer>
                 </div>   

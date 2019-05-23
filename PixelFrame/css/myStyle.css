@@ -14,3 +14,15 @@
   .tekstCheckbox{
       display: inline-block;
   }
+
+  .numberTogglers{
+    max-width: 50px;
+  }
+  table{
+    border-collapse: collapse;
+  }
+
+  tr td{
+    padding: 0 !important;
+    margin: 0 !important;    
+  }

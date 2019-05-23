@@ -15,6 +15,7 @@ io.on('connection', function(socket){
     socket.on('PixelframeTekst', function(msg){
       console.log('message: ' + msg);
       //tekst aan lijst toevoegen
+      //berichtenLijst.push(msg);
       Pix.tekstMarque(msg);
       console.log('tekst getoond')
     });
