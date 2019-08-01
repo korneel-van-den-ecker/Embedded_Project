@@ -11,7 +11,7 @@ const app = express()
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var Pix = require('pixelframe');
+var Pix = require('./node_modules/pixelframe');
 var _TekstAanHetTonen = false;
 //var mqtt_server = require('./MQTT_Server');
 //var mqtt = require('mqtt');
@@ -81,7 +81,7 @@ io.on('connection', function(socket){
     _TekstAanHetTonen = true;
       io.emit('marqueeBezig',_TekstAanHetTonen);
     if( await Pix.tekstMarque(msg.tekst,msg.tekstKleur,msg.achertergrondkleur) == true){
-      //console.log('Klaar');
+      console.log('Klaar');
       _TekstAanHetTonen = false;
       io.emit('marqueeBezig',_TekstAanHetTonen);
     } 
