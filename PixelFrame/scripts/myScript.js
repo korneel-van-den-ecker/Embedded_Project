@@ -151,7 +151,8 @@ $(document).ready(function(){
                 //$(button).data("data-xpos",i).data("data-ypos",j)
                 $(button).attr("data-xpos",i).attr('data-ypos',j).attr('data-brightness',$("#brightLiveEdito").val())
                 //Event handler
-                $(button).click({xPos: i, yPos: j,kleur: 0x00ff00}, ModifyLedFrame);
+
+                $(button).mousedown({xPos: i, yPos: j,kleur: 0x00ff00}, ModifyLedFrame).click(({xPos: i, yPos: j,kleur: 0x00ff00}, ModifyLedFrame));
                 var td = $('<td ></td>');
                 $(td).append(button);                
                 $("tr").last().append(td);                
@@ -222,6 +223,8 @@ $(document).ready(function(){
     
     $("#btnReset").click(function(){   
         $(".btnPixel").css("background-color","black").css("style","none");
+        Maakjson();
+        tekentabel();
     }); 
     
     
