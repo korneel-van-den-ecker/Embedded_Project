@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pixel-Frame</title>
+    <meta name="viewport" content="width=device-width, initital-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--Mqtt librairy-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"
+        type="text/javascript"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/rekenScript.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/myStyle.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script language="JavaScript" src="scripts/bootstrap.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <!--Voor het favicon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+</head>
+
+<body>
+    <div class="p-3 mb-2 bg-dark text-white">
+        <div class="jumbotron  p-3 mb-2 bg-secondary text-white">
+            <div class="container">
+                <h1 class="display-4">Pixelrekenen</h1>
+            </div>
+        </div>
+
+        <div class="container ">
+            <div class="row">
+                <div class="container col-lg-6 min-vh-100">
+                    <div id="marqueePaneel" class="panel panel-default">
+                        <div id="marqueePaneel" class="panel panel-default"></div>
+                        <div class="alert alert-info" id="totaal" role="alert">
+                            Score: 
+                          </div>
+                    </div>
+
+                    <div id="marqueePaneel" class="panel panel-default">
+                        
+                        <div class="panel-heading">Reken uit</div>
+                        <div class="panel-body">                            
+                            <form id="rekenForm" >
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="reken_opdracht">3 + 1 = </span>
+                                    </div>
+                                    <input class="form-control" type="number" id="ingaveInput" autocomplete="off" />
+                                    <div class="input-group-append">
+                                        <button id="verzendKnop" type="submit" class="btn btn-outline-secondary">Los Op</button>
+                                    </div>
+                                </div>
+                            </form> 
+                            <div id = "geschiedenis">
+                                <ul class="list-group overflow-auto" id="geschiedenisLijst">
+                                </ul>
+                            </div>                           
+                        </div>
+                    </div>   
+                </div>
+                <div class="col-lg-6">
+                    <table class="table" id="pixelframe"></table>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="container navbar navbar-default navbar-fixed-bottom">
+            <footer class="row">
+                <div class="col-sm-6 d-none d-sm-block col-md-4">K.Van den Ecker</div>
+                <div class="d-none col-md-4 d-md-block text-center">Mei 2022</div>
+                <div class="col-12 col-sm-6 col-md-4 text-left text-sm-right"> &copy; KorTronics</div>
+            </footer>
+        </div>
+
+    </div>
+</body>
+
+</html>

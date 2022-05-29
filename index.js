@@ -72,6 +72,10 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/rekenen',(req,res)=>{
+  res.sendFile(__dirname + '/rekenen.html')
+})
+
 
 io.on('connection', function (socket) {
   //Voor Live editor
@@ -84,12 +88,13 @@ io.on('connection', function (socket) {
     if (pythonProcess.connected)
       pythonProcess.disconnect();
     _TekstAanHetTonen = true;
+    console.log(msg)
     io.emit('marqueeBezig', _TekstAanHetTonen);
-    if (await Pix.tekstMarque(msg.tekst, msg.tekstKleur, msg.achertergrondkleur) == true) {
+    Pix.tekstMarque(msg.tekst, msg.tekstKleur, msg.achertergrondkleur) == true
       console.log('Klaar');
       _TekstAanHetTonen = false;
       io.emit('marqueeBezig', _TekstAanHetTonen);
-    }
+    
   });
 });
 

@@ -25,7 +25,7 @@ var opgaveAlsTekst = ""
 //4 = ingave
 var opgave = []
 var opgaveGeschiedenis = []
-//var uitkomst;
+var maximumRekenenTot = 200
 
 
 
@@ -79,12 +79,12 @@ $(document).ready(function () {
         console.log(plusOfMin)
         if (plusOfMin == 1) {
             opgave[1] = "-"
-            opgave[0] = Math.floor(Math.random() * 21)
+            opgave[0] = Math.floor(Math.random() * (maximumRekenenTot + 1))
             opgave[2] = Math.floor(Math.random() * (opgave[0] + 1))
             opgave[3] = opgave[0] - opgave[2]
         } else {
             opgave[1] = " + "
-            opgave[3] = Math.floor(Math.random() * 21)
+            opgave[3] = Math.floor(Math.random() * (maximumRekenenTot + 1))
             opgave[0] = Math.floor(Math.random() * (opgave[3] + 1))
             opgave[2] = opgave[3] - opgave[0]
         }
@@ -103,7 +103,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         opgave[4] = parseInt($('#ingaveInput').val())
-        if (!isNaN(opgave[4])){
+        if (isNaN(opgave[4])) {
             window.alert("Geef een nummer in")
         } else {
             var resultaatTekst = ""
@@ -144,10 +144,16 @@ $(document).ready(function () {
         //$('#geschiedenisLijst').empty()        
 
         if (entry.eval == "Juist") {
-            $('#geschiedenisLijst').prepend(`<li class="list-group-item list-group-item-success">${entry.eersteFactor} ${entry.plusOfMin} ${entry.tweedeFactor} = ${entry.ingave}</li>`)
+            $('#geschiedenisLijst').prepend(
+                `<li class="list-group-item list-group-item-success">
+                ${entry.eersteFactor} ${entry.plusOfMin} ${entry.tweedeFactor} = ${entry.ingave}
+                </li>`)
         }
         else {
-            $('#geschiedenisLijst').prepend(`<li class="list-group-item list-group-item-danger">${entry.eersteFactor} ${entry.plusOfMin} ${entry.tweedeFactor} = ${entry.ingave}</li>`)
+            $('#geschiedenisLijst').prepend(
+                `<li class="list-group-item list-group-item-danger">
+                ${entry.eersteFactor} ${entry.plusOfMin} ${entry.tweedeFactor} = ${entry.ingave}
+                </li>`)
         }
         var aantalJuist = opgaveGeschiedenis.filter(x => x.eval == "Juist").length
         var totaalGemaakt = opgaveGeschiedenis.length
