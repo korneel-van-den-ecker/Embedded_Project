@@ -22,9 +22,7 @@ var maximumRekenenTot = 20
 
 $(document).ready(function () {
 
-    stelSomOp()
-
-    function stelSomOp() {
+    stelSomOp = () => {
         var plusOfMin = Math.floor(Math.random() * 2) % 2
         var a;
         var b;
@@ -46,6 +44,8 @@ $(document).ready(function () {
         $('#reken_opdracht').text(`${opgave[0]} ${opgave[1]} ${opgave[2]} = `)
 
     }
+
+    stelSomOp()
 
     $('#rekenForm').submit((e) => {
         e.preventDefault();
@@ -87,6 +87,23 @@ $(document).ready(function () {
             vulGeschiedenisAan(entry1)
         }
     })
+
+    $('#rekenModuleLink').click(()=>{
+        $('#rekenModule').show();
+        $('#raadselModule').hide();
+        return false;        
+    })
+
+    $('#raadselnModuleLink').click(()=>{
+        $('#rekenModule').hide();
+        $('#raadselModule').show();
+        return false;        
+    })
+
+    
+
+    
+    
     vulGeschiedenisAan = (entry) => {
         //$('#geschiedenisLijst').empty()        
 
@@ -108,4 +125,9 @@ $(document).ready(function () {
         $('#totaal').html(score)
 
     }
+
+    function raadselBuilder() {
+        
+    }
+
 });
