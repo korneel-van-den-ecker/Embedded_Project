@@ -20,6 +20,15 @@ var opgave = []
 var opgaveGeschiedenis = []
 var maximumRekenenTot = 20
 
+// 0 = voor Na Of Tussen
+// 1 = midden
+// 2 = ingave 1 
+// 3 = ingave 2 -> enkel voor tussen 
+// 4 = eval
+
+var raadselVoorNOpgave = []
+var raadselVoorNOpgaveGeschiedenis = []
+
 $(document).ready(function () {
 
     stelSomOp = () => {
@@ -88,22 +97,24 @@ $(document).ready(function () {
         }
     })
 
-    $('#rekenModuleLink').click(()=>{
+    //Navigatie Menu
+    $('#rekenModuleLink').click(() => {
         $('#rekenModule').show();
         $('#raadselModule').hide();
-        return false;        
+        return false;
     })
 
-    $('#raadselnModuleLink').click(()=>{
+    $('#raadselnModuleLink').click(() => {
         $('#rekenModule').hide();
         $('#raadselModule').show();
-        return false;        
+        raadselBuilderVoorNa();
+        return false;
     })
 
-    
 
-    
-    
+
+
+
     vulGeschiedenisAan = (entry) => {
         //$('#geschiedenisLijst').empty()        
 
@@ -122,12 +133,159 @@ $(document).ready(function () {
         var aantalJuist = opgaveGeschiedenis.filter(x => x.eval == "Juist").length
         var totaalGemaakt = opgaveGeschiedenis.length
         var score = `Score: ${aantalJuist} / ${totaalGemaakt}`
-        $('#totaal').html(score)
+        $('#totaalRekenen').html(score)
 
     }
 
-    function raadselBuilder() {
-        
+    ////////////////////////////  Raadsels  //////////////////////////::
+
+    function raadselBuilderVoorNa() {
+        raadselVoorNOpgave[0] = Math.floor(Math.random() * 2) % 2
+        raadselVoorNOpgave[1] = Math.floor(Math.random() * (maximumRekenenTot + 1))
+
+        juistFoutGenerator = (juist) => {
+            if (juist) {
+                resultaatTekst = "Juist"
+                tekstKleur = new kleur(0, 0, 0, 1)
+                achertergrondkleur = new kleur(0, 255, 0, 1)
+            } else {
+                resultaatTekst = "Fout"
+                tekstKleur = new kleur(0, 0, 0, 1)
+                achertergrondkleur = new kleur(255, 0, 0, 1)
+            }
+
+            var teverzendenOject = {
+                "tekst": resultaatTekst,
+                "tekstKleur": tekstKleur,
+                "achertergrondkleur": achertergrondkleur,
+            }
+            socket.emit('PixelframeTekst', teverzendenOject);
+        }
+
+        //Voor
+        if (raadselVoorNOpgave[0] == 0) {
+            raadselBuilderVoorNa[2] = raadselVoorNOpgave[1] + 1
+            $('#reken_opdrachtText1').text(`${raadselVoorNOpgave[1]} komt net voor: `)
+            $('#ingaveInputOpdracht2').hide()
+            $('#reken_opdrachtText2').hide()
+        }
+        //Na
+        if (raadselVoorNOpgave[0] == 1) {
+            raadselBuilderVoorNa[2] = raadselVoorNOpgave[1] - 1
+            $('#reken_opdrachtText1').text(`${raadselVoorNOpgave[1]} komt net na: `)
+            $('#ingaveInputOpdracht2').hide()
+            $('#reken_opdrachtText2').hide()
+        }
+        //Tussen
+        if (raadselVoorNOpgave[0] == 2) {
+
+        }
+
     }
+    function vuldGeschiedenisAanRaadsel(entry) {
+        var kleur;
+        var text;
+        if (entry.eval == true) {
+            kleur = "success"
+        } else {
+            kleur = "danger"
+        }
+
+        switch (entry.voorNaOfTussen) {
+            case 0:
+                text = `${entry.midden} komt net voor: ${entry.ingave1}`
+                break;
+            case 1:
+                text = `${entry.midden} komt net na: ${entry.ingave1}`
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+
+
+        $('#geschiedenisLijstRaadsel').prepend(
+            `<li class="list-group-item list-group-item-${kleur}">
+            ${text}            
+            </li>`
+        )
+        var aantalJuist = opgaveGeschiedenis.filter(x => x.eval == "Juist").length
+        var totaalGemaakt = opgaveGeschiedenis.length
+        var score = `Score: ${aantalJuist} / ${totaalGemaakt}`
+        $('#totaalRekenen').html(score)
+
+    }
+
+    $('#raadselForm').submit(function (e) {
+        e.preventDefault();
+        raadselVoorNOpgave[2] = parseInt($('#ingaveInputOpdracht1').val())
+        raadselVoorNOpgave[3] = parseInt($('#ingaveInputOpdracht2').val())
+
+        if (isNaN(raadselVoorNOpgave[2])) {
+            window.alert("Geef een nummer in")
+        }
+
+        else {
+
+            switch (raadselVoorNOpgave[0]) {
+                //Voor
+                case 0:
+                    //Juist
+                    if (raadselVoorNOpgave[2] == raadselVoorNOpgave[1] + 1) {
+                        juistFoutGenerator(true);
+                        raadselVoorNOpgave[4] = true
+                    }
+                    //Fout
+                    else {
+                        juistFoutGenerator(false);
+                        raadselVoorNOpgave[4] = false
+                    }
+                    break;
+                //Na
+                case 1:
+                    //Juist
+                    if (raadselVoorNOpgave[2] == raadselVoorNOpgave[1] - 1) {
+                        juistFoutGenerator(true);
+                        raadselVoorNOpgave[4] = true
+                    }
+                    //Fout
+                    else {
+                        juistFoutGenerator(false);
+                        raadselVoorNOpgave[4] = false
+                    }
+                    break;
+                //Tussen
+                case 2:
+
+                    break;
+
+                default:
+                    break;
+            }
+            // 0 = voor Na Of Tussen
+            // 1 = midden
+            // 2 = ingave 1 
+            // 3 = ingave 2 -> enkel voor tussen 
+            function entry() {
+                return {
+                    "voorNaOfTussen": raadselVoorNOpgave[0],
+                    "midden": raadselVoorNOpgave[1],
+                    "ingave1": raadselVoorNOpgave[2],
+                    "ingave2": raadselVoorNOpgave[3],
+                    "eval": raadselVoorNOpgave[4]
+                }
+            }
+            var entry1 = entry();
+            raadselVoorNOpgaveGeschiedenis.push(entry1)
+            vuldGeschiedenisAanRaadsel(entry1)
+            raadselBuilderVoorNa();
+            $('#ingaveInputOpdracht1').val("")
+            $('#ingaveInputOpdracht2').val("")
+        }
+
+
+
+    });
 
 });

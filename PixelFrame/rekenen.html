@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <title>Pixel-Frame</title>
     <meta name="viewport" content="width=device-width, initital-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <script src="./lib/jquery.min.js"></script>
     <!--Mqtt librairy-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"
         type="text/javascript"></script>
@@ -33,44 +34,102 @@
                 <h1 class="display-4">Pixelrekenen</h1>
             </div>
         </div>
-
         <div class="container ">
-            <div class="row">
-                <div class="container col-lg-6 min-vh-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light col-lg-6">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="" id="rekenModuleLink">Rekenen<span
+                                class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="" id="raadselnModuleLink">Raadsel</a>
+                        <a class="nav-item nav-link disabled" href="#">Disabled</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="row" id="rekenModule">
+                <div class="container col-lg-6 ">
                     <div id="marqueePaneel" class="panel panel-default">
                         <div id="marqueePaneel" class="panel panel-default"></div>
-                        <div class="alert alert-info" id="totaal" role="alert">
-                            Score: 
-                          </div>
+                        <div class="alert alert-info" id="totaalRekenen" role="alert">
+                            Score:
+                        </div>
                     </div>
 
                     <div id="marqueePaneel" class="panel panel-default">
-                        
+
                         <div class="panel-heading">Reken uit</div>
-                        <div class="panel-body">                            
-                            <form id="rekenForm" >
+                        <div class="panel-body">
+                            <form id="rekenForm">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="reken_opdracht">3 + 1 = </span>
                                     </div>
                                     <input class="form-control" type="number" id="ingaveInput" autocomplete="off" />
                                     <div class="input-group-append">
-                                        <button id="verzendKnop" type="submit" class="btn btn-outline-secondary">Los Op</button>
+                                        <button id="verzendKnop" type="submit" class="btn btn-outline-secondary">Los
+                                            Op</button>
                                     </div>
                                 </div>
-                            </form> 
-                            <div id = "geschiedenis">
+                            </form>
+                            <div>
                                 <ul class="list-group overflow-auto" id="geschiedenisLijst">
                                 </ul>
-                            </div>                           
+                            </div>
                         </div>
-                    </div>   
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     <table class="table" id="pixelframe"></table>
                 </div>
             </div>
-            
+
+            <div class="row" id="raadselModule">
+                <div class="container col-lg-6 ">
+                    <div id="marqueePaneel" class="panel panel-default">
+                        <div id="marqueePaneel" class="panel panel-default"></div>
+                        <div class="alert alert-info" id="totaalRaadsel" role="alert">
+                            Score:
+                        </div>
+                    </div>
+                    <div id="marqueePaneel" class="panel panel-default">
+
+                        <div class="panel-heading">Raadsel</div>
+                        <div class="panel-body">
+                            <form id="raadselForm">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="reken_opdrachtText1"></span>
+                                    </div>
+                                    <input class="form-control" type="number" id="ingaveInputOpdracht1"
+                                        autocomplete="off" />
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="reken_opdrachtText2"></span>
+                                    </div>
+                                    <input class="form-control" type="number" id="ingaveInputOpdracht2"
+                                        autocomplete="off" />
+                                    <div class="input-group-append">
+                                        <button id="verzendKnop" type="submit" class="btn btn-outline-secondary">Los
+                                            Op</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="geschiedenisRaadsel">
+                                <ul class="list-group overflow-auto" id="geschiedenisLijstRaadsel">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <table class="table" id="pixelframe"></table>
+                </div>
+            </div>
+
         </div>
 
         <div class="container navbar navbar-default navbar-fixed-bottom">
