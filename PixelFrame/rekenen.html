@@ -46,7 +46,8 @@
                         <a class="nav-item nav-link" href="" id="rekenModuleLink">Rekenen<span
                                 class="sr-only">(current)</span></a>
                         <a class="nav-item nav-link" href="" id="raadselnModuleLink">Raadsel</a>
-                        <a class="nav-item nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-item nav-link" href="" id="tafelModuleLink">Tafels</a>
+                        <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
                     </div>
                 </div>
             </nav>
@@ -70,6 +71,43 @@
                                         <span class="input-group-text" id="reken_opdracht">3 + 1 = </span>
                                     </div>
                                     <input class="form-control" type="number" id="ingaveInput" autocomplete="off" />
+                                    <div class="input-group-append">
+                                        <button id="verzendKnop" type="submit" class="btn btn-outline-secondary">Los
+                                            Op</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div>
+                                <ul class="list-group overflow-auto" id="geschiedenisLijst">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <table class="table" id="pixelframe"></table>
+                </div>
+            </div>
+
+            <div class="row" id="tafelModule">
+                <div class="container col-lg-6 ">
+                    <div id="marqueePaneel" class="panel panel-default">
+                        <div id="marqueePaneel" class="panel panel-default"></div>
+                        <div class="alert alert-info" id="totaalTafel" role="alert">
+                            Score:
+                        </div>
+                    </div>
+
+                    <div id="marqueePaneel" class="panel panel-default">
+
+                        <div class="panel-heading">Reken uit</div>
+                        <div class="panel-body">
+                            <form id="rekenForm">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="tafel_opdracht">3 + 1 = </span>
+                                    </div>
+                                    <input class="form-control" type="number" id="ingaveInputTafel" autocomplete="off" />
                                     <div class="input-group-append">
                                         <button id="verzendKnop" type="submit" class="btn btn-outline-secondary">Los
                                             Op</button>
