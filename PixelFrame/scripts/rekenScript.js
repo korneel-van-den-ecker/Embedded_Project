@@ -31,6 +31,34 @@ var raadselVoorNOpgaveGeschiedenis = []
 
 $(document).ready(function () {
 
+     //Navigatie Menu
+     $('#rekenModuleLink').click(() => {
+        $('#rekenModule').show();
+        $('#raadselModule').hide();        
+        $('#tafelModule').hide();
+        return false;
+    })
+
+    $('#raadselnModuleLink').click(() => {
+        $('#rekenModule').hide();
+        $('#raadselModule').show();        
+        $('#tafelModule').hide();
+        raadselBuilderVoorNa();
+        return false;
+    })
+
+    $('#tafelModuleLink').click(() => {
+        $('#rekenModule').hide();
+        $('#raadselModule').hide();
+        $('#tafelModule').show();
+        raadselBuilderVoorNa();
+        return false;
+    })
+
+    /////////////////////:Tafeles///////////////////////
+
+    /////////////////////:REKENEN//////////////////////
+
     stelSomOp = () => {
         var plusOfMin = Math.floor(Math.random() * 2) % 2
         var a;
@@ -97,19 +125,7 @@ $(document).ready(function () {
         }
     })
 
-    //Navigatie Menu
-    $('#rekenModuleLink').click(() => {
-        $('#rekenModule').show();
-        $('#raadselModule').hide();
-        return false;
-    })
-
-    $('#raadselnModuleLink').click(() => {
-        $('#rekenModule').hide();
-        $('#raadselModule').show();
-        raadselBuilderVoorNa();
-        return false;
-    })
+   
 
 
 
@@ -210,10 +226,10 @@ $(document).ready(function () {
             ${text}            
             </li>`
         )
-        var aantalJuist = opgaveGeschiedenis.filter(x => x.eval == "Juist").length
-        var totaalGemaakt = opgaveGeschiedenis.length
+        var aantalJuist = raadselVoorNOpgaveGeschiedenis.filter(x => x.eval == "Juist").length
+        var totaalGemaakt = raadselVoorNOpgaveGeschiedenis.length
         var score = `Score: ${aantalJuist} / ${totaalGemaakt}`
-        $('#totaalRekenen').html(score)
+        $('#totaalRaadsel').html(score)
 
     }
 
